@@ -237,20 +237,20 @@ Entity createEntity(
 		const GameConfig::FontConfig&  fConfig
 	)
 {
-		Entity e(shape);
-		e.setSpeedX(config.speedX);
-		e.setSpeedY(config.speedY);
+	Entity e(shape);
+	e.setSpeedX(config.speedX);
+	e.setSpeedY(config.speedY);
 
-		sf::Text title;
-		title.setFont(font);
-		title.setString(config.name);
-		title.setCharacterSize(fConfig.size);
-		title.setFillColor(sf::Color(fConfig.redColor, fConfig.greenColor, fConfig.blueColor));
-		sf::FloatRect lb = title.getLocalBounds();
-		title.setOrigin(lb.left + lb.width / 2.0f, lb.top + lb.height / 2.0f);
-		e.setTitle(title);
+	sf::Text title;
+	title.setFont(font);
+	title.setString(config.name);
+	title.setCharacterSize(fConfig.size);
+	title.setFillColor(sf::Color(fConfig.redColor, fConfig.greenColor, fConfig.blueColor));
+	sf::FloatRect lb = title.getLocalBounds();
+	title.setOrigin(lb.left + lb.width / 2.0f, lb.top + lb.height / 2.0f);
+	e.setTitle(title);
 
-		return e;
+	return e;
 }
 
 void initializeEntities(GameConfig config, std::vector<Entity>& entities, const sf::Font& font)
@@ -281,7 +281,9 @@ int main(int argc, char * argv[])
 	sf::Font font;
 	if (! font.loadFromFile(config.getFontConfig().path))
 	{
+		// SFML already provides a nice error message, leave it here just for practice.
 		std::cerr << "Failed loading font." << std::endl;
+		return -1;
 	}
 	initializeEntities(config, entities, font);
 
