@@ -25,6 +25,9 @@ CL_FLAGS=-std=c++17 \
          -O3        \
          -o         \
 
+# Libraries
+LIB=-lsfml-graphics
+
 # Command used at clean target
 RM = rm -rf
 
@@ -35,7 +38,7 @@ all: objFolder binFolder $(PROJ_NAME)
 
 $(PROJ_NAME): $(OBJ)
 	@ echo 'Building binary using G++ linker: $@'
-	$(CC) $^ $(CL_FLAGS) ./$(BIN_FOLDER)/$@
+	$(CC) $^ $(CL_FLAGS) ./$(BIN_FOLDER)/$@ $(LIB)
 	@ echo 'Finished building binary: $@'
 	@ echo ' '
 

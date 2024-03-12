@@ -1,8 +1,10 @@
+#include "Config.h"
 #include "Game.h"
 
 int main (int argc, char * argv[])
 {
-	Game game("config.txt");
+	Config config("config.txt");
+	Game game(config);
 	game.run();
 
 	return 0;

@@ -2,9 +2,9 @@
 
 class Game
 {
-	const std::string& m_configFile;
+	const Config& m_config;
 
 public:
-	Game(const std::string& configFile);
+	Game(const Config& configFile);
 	int run();
 };

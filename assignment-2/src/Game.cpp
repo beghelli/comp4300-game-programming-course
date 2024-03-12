@@ -1,12 +1,12 @@
 #include <iostream>
+#include "Config.h"
 #include "Game.h"
 
-Game::Game(const std::string& configFile)
-	: m_configFile(configFile)
+Game::Game(const Config& config)
+	: m_config(config)
 {}
 
 int Game::run()
 {
-	std::cout << "Game ran. Config file was: " << m_configFile << std::endl;
 	return 1;
 }
