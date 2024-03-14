@@ -1,2 +1,4 @@
 *.o
 game
+*.swp
+notes.txt
