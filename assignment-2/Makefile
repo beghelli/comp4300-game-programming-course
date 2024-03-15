@@ -26,7 +26,7 @@ CL_FLAGS=-std=c++17 \
          -o         \
 
 # Libraries
-LIB=-lsfml-graphics
+LIB=-lsfml-graphics -lsfml-window -lsfml-system
 
 # Command used at clean target
 RM = rm -rf

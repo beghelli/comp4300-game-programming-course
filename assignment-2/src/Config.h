@@ -4,6 +4,7 @@
 
 class Config
 {
+public:
 	template <typename T>
 	struct Interval
 	{
@@ -61,6 +62,7 @@ class Config
 		unsigned int lifespan;
 	};
 
+private:
 	const std::string& m_configFile;
 	WindowCfg m_windowCfg;
 	FontCfg m_fontCfg;
