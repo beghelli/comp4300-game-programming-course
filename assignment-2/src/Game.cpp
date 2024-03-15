@@ -44,12 +44,14 @@ void Game::runGameLoop()
 {
 	while (m_window.isOpen())
 	{
+		m_window.clear();
 		m_entities.update();
 		for (std::shared_ptr<Entity>& e : m_entities.getEntities())
 		{
 			runInputSystem();
 			runRendererSystem(e);
 		}
+		m_window.display();
 	}
 }
 
@@ -67,8 +69,6 @@ void Game::runInputSystem()
 
 void Game::runRendererSystem(std::shared_ptr<Entity>& e)
 {
-	m_window.clear();
 	sf::Shape& shape = e->cShape->shape;
 	m_window.draw(shape);
-	m_window.display();
 }
