@@ -11,7 +11,7 @@ class Game
 
 	void runGameLoop();
 	void runInputSystem();
-	void runRendererSystem();
+	void runRendererSystem(std::shared_ptr<Entity>& e);
 
 public:
 	Game(const Config& configFile);
