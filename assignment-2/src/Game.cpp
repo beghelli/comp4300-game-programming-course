@@ -29,6 +29,7 @@ int Game::run()
 	std::shared_ptr<CTransform> ct = std::make_shared<CTransform>();
 	ct->pos = Vec2(1,1);
 	ct->velocity = Vec2(0,0);
+	ct->maxVelocity = pc.velocity;
 	e->cTransform = ct;
 
 	sf::CircleShape shape(pc.radius, pc.shapeVertices);
@@ -50,119 +51,9 @@ void Game::runGameLoop()
 {
 	while (m_window.isOpen())
 	{
-		m_window.clear();
 		m_entities.update();
-		for (std::shared_ptr<Entity>& e : m_entities.getEntities())
-		{
-			runInputSystem(e);
-			runMovementSystem(e);
-			runRendererSystem(e);
-		}
-		m_window.display();
-	}
-}
-
-void Game::runInputSystem(std::shared_ptr<Entity>& e)
-{
-	sf::Event event;
-	while (m_window.pollEvent(event))
-	{
-		if (event.type == sf::Event::Closed)
-		{
-			m_window.close();
-		}
-		else if (event.type == sf::Event::KeyPressed)
-		{
-			if (e->cInput)
-			{
-				if (event.key.code == sf::Keyboard::Key::D)
-				{
-					e->cInput->right = true;
-				}
-				else if (event.key.code == sf::Keyboard::Key::A)
-				{
-					e->cInput->left = true;
-				}
-				else if (event.key.code == sf::Keyboard::Key::W)
-				{
-					e->cInput->up = true;
-				}
-				else if (event.key.code == sf::Keyboard::Key::S)
-				{
-					e->cInput->down = true;
-				}
-			}
-		}
-		else if (event.type == sf::Event::KeyReleased)
-		{
-			if (e->cInput)
-			{
-				if (event.key.code == sf::Keyboard::Key::D)
-				{
-					e->cInput->right = false;
-				}
-				else if (event.key.code == sf::Keyboard::Key::A)
-				{
-					e->cInput->left = false;
-				}
-				else if (event.key.code == sf::Keyboard::Key::W)
-				{
-					e->cInput->up = false;
-				}
-				else if (event.key.code == sf::Keyboard::Key::S)
-				{
-					e->cInput->down = false;
-				}
-			}
-		}
-	}
-}
-
-void Game::runMovementSystem(std::shared_ptr<Entity>& e)
-{
-	if (e->cTransform && e->cShape)
-	{
-		sf::Shape& shape = e->cShape->shape;
-		if (e->cInput)
-		{
-			float velocity = m_config.getPlayer().velocity;
-			if (e->cInput->right)
-			{
-				e->cTransform->velocity.x = velocity;
-			}
-			else if (e->cInput->left)
-			{
-				e->cTransform->velocity.x = -1 * velocity;
-			}
-			else
-			{
-				e->cTransform->velocity.x = 0;
-			}
-
-			if (e->cInput->up)
-			{
-				e->cTransform->velocity.y = -1 * velocity;
-			}
-			else if (e->cInput->down)
-			{
-				e->cTransform->velocity.y = velocity;
-			}
-			else
-			{
-				e->cTransform->velocity.y = 0;
-			}
-		}
-
-		Vec2 newPos = e->cTransform->pos + e->cTransform->velocity;
-		shape.setPosition(newPos.x, newPos.y);
-	}
-}
-
-void Game::runRendererSystem(std::shared_ptr<Entity>& e)
-{
-	if (e->cShape)
-	{
-		sf::Shape& shape = e->cShape->shape;
-		m_window.draw(shape);
+		m_sInput.process(m_entities, m_window);
+		m_sMovement.process(m_entities);
+		m_sRenderer.process(m_entities, m_window);
 	}
 }
