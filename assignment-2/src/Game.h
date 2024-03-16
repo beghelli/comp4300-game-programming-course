@@ -10,7 +10,8 @@ class Game
 	EntityManager m_entities;
 
 	void runGameLoop();
-	void runInputSystem();
+	void runInputSystem(std::shared_ptr<Entity>& e);
+	void runMovementSystem(std::shared_ptr<Entity>& e);
 	void runRendererSystem(std::shared_ptr<Entity>& e);
 
 public:

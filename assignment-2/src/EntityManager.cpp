@@ -2,7 +2,12 @@
 #include "Entity.h"
 
 EntityManager::EntityManager() {};
-EntityManager::~EntityManager() {};
+EntityManager::~EntityManager() {
+	for (auto& e : m_entities)
+	{
+		delete &e;
+	}
+};
 
 void EntityManager::update()
 {

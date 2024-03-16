@@ -1,8 +1,9 @@
 #pragma once
 #include <iostream>
 #include <memory>
-#include "CTransform.h"
+#include "CInput.h"
 #include "CShape.h"
+#include "CTransform.h"
 
 class Entity
 {
@@ -12,6 +13,7 @@ class Entity
 public:
 	std::shared_ptr<CTransform> cTransform;
 	std::shared_ptr<CShape> cShape;
+	std::shared_ptr<CInput> cInput;
 
 	Entity(std::string tag, size_t id);
 	size_t id() const;
