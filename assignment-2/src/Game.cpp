@@ -28,7 +28,7 @@ int Game::run()
 	std::shared_ptr<Entity> e = m_entities.addEntity("Player", 1);
 	std::shared_ptr<CTransform> ct = std::make_shared<CTransform>();
 	ct->pos = Vec2(1,1);
-	ct->velocity = Vec2(pc.velocity, pc.velocity);
+	ct->velocity = Vec2(0,0);
 	e->cTransform = ct;
 
 	sf::CircleShape shape(pc.radius, pc.shapeVertices);
@@ -79,6 +79,18 @@ void Game::runInputSystem(std::shared_ptr<Entity>& e)
 				{
 					e->cInput->right = true;
 				}
+				else if (event.key.code == sf::Keyboard::Key::A)
+				{
+					e->cInput->left = true;
+				}
+				else if (event.key.code == sf::Keyboard::Key::W)
+				{
+					e->cInput->up = true;
+				}
+				else if (event.key.code == sf::Keyboard::Key::S)
+				{
+					e->cInput->down = true;
+				}
 			}
 		}
 		else if (event.type == sf::Event::KeyReleased)
@@ -88,6 +100,18 @@ void Game::runInputSystem(std::shared_ptr<Entity>& e)
 				if (event.key.code == sf::Keyboard::Key::D)
 				{
 					e->cInput->right = false;
+				}
+				else if (event.key.code == sf::Keyboard::Key::A)
+				{
+					e->cInput->left = false;
+				}
+				else if (event.key.code == sf::Keyboard::Key::W)
+				{
+					e->cInput->up = false;
+				}
+				else if (event.key.code == sf::Keyboard::Key::S)
+				{
+					e->cInput->down = false;
 				}
 			}
 		}
@@ -101,12 +125,36 @@ void Game::runMovementSystem(std::shared_ptr<Entity>& e)
 		sf::Shape& shape = e->cShape->shape;
 		if (e->cInput)
 		{
+			float velocity = m_config.getPlayer().velocity;
 			if (e->cInput->right)
 			{
-				e->cTransform->pos.x += e->cTransform->velocity.x;
+				e->cTransform->velocity.x = velocity;
+			}
+			else if (e->cInput->left)
+			{
+				e->cTransform->velocity.x = -1 * velocity;
+			}
+			else
+			{
+				e->cTransform->velocity.x = 0;
+			}
+
+			if (e->cInput->up)
+			{
+				e->cTransform->velocity.y = -1 * velocity;
+			}
+			else if (e->cInput->down)
+			{
+				e->cTransform->velocity.y = velocity;
+			}
+			else
+			{
+				e->cTransform->velocity.y = 0;
 			}
 		}
-		shape.setPosition(e->cTransform->pos.x, e->cTransform->pos.y);
+
+		Vec2 newPos = e->cTransform->pos + e->cTransform->velocity;
+		shape.setPosition(newPos.x, newPos.y);
 	}
 }
 
