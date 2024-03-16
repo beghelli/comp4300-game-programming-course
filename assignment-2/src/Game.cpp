@@ -20,9 +20,32 @@ Game::Game(const Config& config)
 	sf::VideoMode vm(wc.width, wc.height);
 	m_window.create(vm, "My Game");
 	m_window.setFramerateLimit(wc.frameRate);
+	m_sMovement = SMovement(Vec2(wc.width, wc.height));
 }
 
 int Game::run()
+{
+	createPlayer();
+	runGameLoop();
+
+	return 1;
+}
+
+//
+// Private methods.
+//
+void Game::runGameLoop()
+{
+	while (m_window.isOpen())
+	{
+		m_entities.update();
+		m_sInput.process(m_entities, m_window);
+		m_sMovement.process(m_entities);
+		m_sRenderer.process(m_entities, m_window);
+	}
+}
+
+void Game::createPlayer()
 {
 	Config::PlayerCfg pc = m_config.getPlayer();
 	std::shared_ptr<Entity> e = m_entities.addEntity("Player", 1);
@@ -33,6 +56,7 @@ int Game::run()
 	e->cTransform = ct;
 
 	sf::CircleShape shape(pc.radius, pc.shapeVertices);
+	shape.setOrigin(pc.radius, pc.radius);
 	shape.setFillColor(pc.fillColor);
 	shape.setOutlineColor(pc.outlineColor);
 	shape.setOutlineThickness(pc.outlineThickness);
@@ -41,19 +65,4 @@ int Game::run()
 
 	std::shared_ptr<CInput> ci = std::make_shared<CInput>();
 	e->cInput = ci;
-
-	runGameLoop();
-
-	return 1;
-}
-
-void Game::runGameLoop()
-{
-	while (m_window.isOpen())
-	{
-		m_entities.update();
-		m_sInput.process(m_entities, m_window);
-		m_sMovement.process(m_entities);
-		m_sRenderer.process(m_entities, m_window);
-	}
 }

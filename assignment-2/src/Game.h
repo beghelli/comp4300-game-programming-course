@@ -16,6 +16,7 @@ class Game
 	SRenderer m_sRenderer;
 
 	void runGameLoop();
+	void createPlayer();
 
 public:
 	Game(const Config& configFile);
