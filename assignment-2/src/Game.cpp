@@ -51,7 +51,7 @@ void Game::createPlayer()
 	Config::PlayerCfg pc = m_config.getPlayer();
 	std::shared_ptr<Entity> e = m_entities.addEntity("Player", 1);
 	std::shared_ptr<CTransform> ct = std::make_shared<CTransform>();
-	ct->pos = Vec2(1,1);
+	ct->pos = Vec2(m_config.getWindow().width / 2, m_config.getWindow().height / 2);
 	ct->velocity = Vec2(0,0);
 	ct->maxVelocity = pc.velocity;
 	e->cTransform = ct;
