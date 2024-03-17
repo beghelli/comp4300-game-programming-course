@@ -6,6 +6,7 @@
 #include <SFML/Window/VideoMode.hpp>
 #include "Config.h"
 #include "CInput.h"
+#include "CMouseInput.h"
 #include "CShape.h"
 #include "CTransform.h"
 #include "Entity.h"
@@ -65,4 +66,7 @@ void Game::createPlayer()
 
 	std::shared_ptr<CInput> ci = std::make_shared<CInput>();
 	e->cInput = ci;
+
+	std::shared_ptr<CMouseInput> cmi = std::make_shared<CMouseInput>();
+	e->cMouseInput = cmi;
 }

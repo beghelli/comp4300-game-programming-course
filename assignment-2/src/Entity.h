@@ -2,6 +2,7 @@
 #include <iostream>
 #include <memory>
 #include "CInput.h"
+#include "CMouseInput.h"
 #include "CShape.h"
 #include "CTransform.h"
 
@@ -14,6 +15,7 @@ public:
 	std::shared_ptr<CTransform> cTransform;
 	std::shared_ptr<CShape> cShape;
 	std::shared_ptr<CInput> cInput;
+	std::shared_ptr<CMouseInput> cMouseInput;
 
 	Entity(std::string tag, size_t id);
 	size_t id() const;

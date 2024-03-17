@@ -4,7 +4,8 @@
 
 class SInput
 {
-	void handleForEntity(sf::Event event, std::shared_ptr<Entity>& e);
+	void handleKeysForEntity(sf::Event event, std::shared_ptr<Entity>& e);
+	void handleMouseForEntity(sf::Event event, std::shared_ptr<Entity>& e);
 
 public:
 	SInput();

@@ -16,13 +16,17 @@ void SInput::process(EntityManager& entities, sf::RenderWindow& window)
 		{
 			if (e->cInput)
 			{
-				handleForEntity(event, e);
+				handleKeysForEntity(event, e);
+			}
+			if (e->cMouseInput)
+			{
+				handleMouseForEntity(event, e);
 			}
 		}
 	}
 }
 
-void SInput::handleForEntity(sf::Event event, std::shared_ptr<Entity>& e)
+void SInput::handleKeysForEntity(sf::Event event, std::shared_ptr<Entity>& e)
 {
 	if (event.type == sf::Event::KeyPressed)
 	{
@@ -61,5 +65,19 @@ void SInput::handleForEntity(sf::Event event, std::shared_ptr<Entity>& e)
 		{
 			e->cInput->down = false;
 		}
+	}
+}
+
+void SInput::handleMouseForEntity(sf::Event event, std::shared_ptr<Entity>& e)
+{
+	if (event.type == sf::Event::MouseMoved)
+	{
+		e->cMouseInput->pos.x = event.mouseMove.x;
+		e->cMouseInput->pos.y = event.mouseMove.y;
+		e->cMouseInput->moved = true;
+	}
+	else
+	{
+		e->cMouseInput->moved = false;
 	}
 }

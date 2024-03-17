@@ -13,7 +13,6 @@ class EntityManager
 	VEntities m_entitiesToAdd;
 public:
 	EntityManager();
-	~EntityManager();
 	void update();
 	std::shared_ptr<Entity> addEntity(std::string tag, size_t id);
 	VEntities&getEntities();

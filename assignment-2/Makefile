@@ -22,7 +22,6 @@ CC_FLAGS=-c         \
          -O3        \
 # Flags for linker
 CL_FLAGS=-std=c++17 \
-         -O3        \
          -o         \
 
 # Libraries

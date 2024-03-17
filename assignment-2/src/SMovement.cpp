@@ -1,4 +1,4 @@
-#include <math.h>
+#include <cmath>
 #include "SMovement.h"
 
 SMovement::SMovement() {}
@@ -17,9 +17,15 @@ void SMovement::process(EntityManager& entities)
 				applyMovementFromInput(e);
 			}
 
+			if (e->cMouseInput)
+			{
+				applyMovementFromMouseInput(e);
+			}
+
 			sf::Shape& shape = e->cShape->shape;
 			Vec2 newPos = e->cTransform->pos + e->cTransform->velocity;
 			shape.setPosition(newPos.x, newPos.y);
+			shape.setRotation(e->cTransform->angle);
 		}
 	}
 }
@@ -71,6 +77,15 @@ void SMovement::applyMovementFromInput(std::shared_ptr<Entity>& e)
 	}
 }
 
+void SMovement::applyMovementFromMouseInput(std::shared_ptr<Entity>& e)
+{
+	if (e->cMouseInput->moved || e->cInput->up || e->cInput->down || e->cInput->left || e->cInput->right)
+	{
+		double mAngle = calculateMouseAngle(e->cTransform->pos, e->cMouseInput->pos);
+		e->cTransform->angle = mAngle;
+	}
+}
+
 double SMovement::adaptVelocityToStayInsideMovArea(float pos, float limit, double velocity)
 {
 	float distanceUntilBorder = fabs(limit - pos);
@@ -80,4 +95,10 @@ double SMovement::adaptVelocityToStayInsideMovArea(float pos, float limit, doubl
 	}
 
 	return velocity;
+}
+
+double SMovement::calculateMouseAngle(Vec2 ep, Vec2 mp)
+{
+	Vec2 distance = mp - ep;
+	return atan2(distance.y, distance.x) * (180 / M_PI);
 }
