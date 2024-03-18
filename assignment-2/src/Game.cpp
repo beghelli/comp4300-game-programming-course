@@ -7,6 +7,7 @@
 #include "Config.h"
 #include "CInput.h"
 #include "CMouseInput.h"
+#include "CGun.h"
 #include "CShape.h"
 #include "CTransform.h"
 #include "Entity.h"
@@ -22,6 +23,7 @@ Game::Game(const Config& config)
 	m_window.create(vm, "My Game");
 	m_window.setFramerateLimit(wc.frameRate);
 	m_sMovement = SMovement(Vec2(wc.width, wc.height));
+	m_sGun = SGun(config.getBullet());
 }
 
 int Game::run()
@@ -39,17 +41,19 @@ void Game::runGameLoop()
 {
 	while (m_window.isOpen())
 	{
+		m_gameFrame++;
 		m_entities.update();
 		m_sInput.process(m_entities, m_window);
 		m_sMovement.process(m_entities);
 		m_sRenderer.process(m_entities, m_window);
+		m_sGun.process(m_entities, m_gameFrame);
 	}
 }
 
 void Game::createPlayer()
 {
 	Config::PlayerCfg pc = m_config.getPlayer();
-	std::shared_ptr<Entity> e = m_entities.addEntity("Player", 1);
+	std::shared_ptr<Entity> e = m_entities.addEntity("Player");
 	std::shared_ptr<CTransform> ct = std::make_shared<CTransform>();
 	ct->pos = Vec2(m_config.getWindow().width / 2, m_config.getWindow().height / 2);
 	ct->velocity = Vec2(0,0);
@@ -69,4 +73,8 @@ void Game::createPlayer()
 
 	std::shared_ptr<CMouseInput> cmi = std::make_shared<CMouseInput>();
 	e->cMouseInput = cmi;
+
+	std::shared_ptr<CGun> cgun = std::make_shared<CGun>();
+	cgun->framesPerFire = pc.fireRate;
+	e->cGun = cgun;
 }

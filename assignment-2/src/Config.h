@@ -36,6 +36,7 @@ public:
 		sf::Color outlineColor;
 		unsigned int outlineThickness;
 		unsigned int shapeVertices;
+		unsigned int fireRate;
 	};
 
 	struct EnemyCfg

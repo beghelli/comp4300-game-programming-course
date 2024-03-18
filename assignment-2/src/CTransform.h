@@ -11,6 +11,6 @@ public:
 	double maxVelocity;
 
 	CTransform();
-	CTransform(Vec2& pos, Vec2& velocity, Vec2& scale, double angle, double maxVelocity);
+	CTransform(Vec2 pos, Vec2 velocity, Vec2 scale, double angle, double maxVelocity);
 	~CTransform();
 };

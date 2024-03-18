@@ -80,4 +80,26 @@ void SInput::handleMouseForEntity(sf::Event event, std::shared_ptr<Entity>& e)
 	{
 		e->cMouseInput->moved = false;
 	}
+
+	if (event.type == sf::Event::MouseButtonPressed)
+	{
+		if (event.mouseButton.button == sf::Mouse::Left)
+		{
+			e->cMouseInput->leftClicked = true;
+			e->cMouseInput->leftClickPos.x = event.mouseButton.x;
+			e->cMouseInput->leftClickPos.y = event.mouseButton.y;
+		}
+		else
+		{
+			e->cMouseInput->leftClicked = false;
+			e->cMouseInput->leftClickPos.x = 0;
+			e->cMouseInput->leftClickPos.y = 0;
+		}
+	}
+	else
+	{
+		e->cMouseInput->leftClicked = false;
+		e->cMouseInput->leftClickPos.x = 0;
+		e->cMouseInput->leftClickPos.y = 0;
+	}
 }

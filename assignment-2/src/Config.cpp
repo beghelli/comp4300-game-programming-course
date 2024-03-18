@@ -50,6 +50,7 @@ void Config::read()
 			m_playerCfg.outlineColor = sf::Color(r, g, b);
 			ifs >> m_playerCfg.outlineThickness;
 			ifs >> m_playerCfg.shapeVertices;
+			ifs >> m_playerCfg.fireRate;
 		}
 
 		if (type == "Enemy")

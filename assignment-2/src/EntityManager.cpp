@@ -14,9 +14,9 @@ void EntityManager::update()
 	m_entitiesToAdd.clear();
 }
 
-std::shared_ptr<Entity> EntityManager::addEntity(std::string tag, size_t id)
+std::shared_ptr<Entity> EntityManager::addEntity(std::string tag)
 {
-	std::shared_ptr<Entity> e = std::make_shared<Entity>(tag, id);
+	std::shared_ptr<Entity> e = std::make_shared<Entity>(tag, entitiesCount++);
 	m_entitiesToAdd.push_back(e);
 
 	return e;
