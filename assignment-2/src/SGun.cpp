@@ -32,10 +32,11 @@ void SGun::handleFire(EntityManager& entities, std::shared_ptr<Entity>& e, unsig
 		cs.setOutlineThickness(m_bulletCfg.outlineThickness);
 		std::shared_ptr<CShape> compS = std::make_shared<CShape>(cs);
 		bullet->cShape = compS;
+		float radians = (e->cTransform->angle - 45) * (M_PI / 180);
 
 		std::shared_ptr<CTransform> ct = std::make_shared<CTransform>(
 			e->cTransform->pos,
-			Vec2(m_bulletCfg.velocity, m_bulletCfg.velocity),
+			Vec2(m_bulletCfg.velocity * cos(radians) - m_bulletCfg.velocity * sin(radians), m_bulletCfg.velocity * sin(radians) + m_bulletCfg.velocity * cos(radians)),
 			Vec2(0,0),
 			e->cTransform->angle,
 			m_bulletCfg.velocity
