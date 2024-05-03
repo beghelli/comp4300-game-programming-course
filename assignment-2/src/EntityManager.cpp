@@ -11,6 +11,23 @@ void EntityManager::update()
 		m_entitiesByTag[e->tag()].push_back(e);
 	}
 
+	std::vector<int> toDelete;
+	unsigned int counter = 0;
+	for (std::shared_ptr<Entity>& e : m_entities)
+	{
+		if (! e->isActive())
+		{
+			toDelete.push_back(counter);
+		}
+		counter++;
+	}
+
+	for (int index : toDelete)
+	{
+		m_entities.erase(m_entities.begin() + index);
+	}
+
+	toDelete.clear();
 	m_entitiesToAdd.clear();
 }
 

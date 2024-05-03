@@ -1,6 +1,7 @@
 #include <SFML/Graphics/CircleShape.hpp>
 #include <cmath>
 #include "SGun.h"
+#include "CLifeSpan.h"
 #include "CShape.h"
 #include "CTransform.h"
 #include "Vec2.h"
@@ -30,8 +31,13 @@ void SGun::handleFire(EntityManager& entities, std::shared_ptr<Entity>& e, unsig
 		cs.setFillColor(m_bulletCfg.fillColor);
 		cs.setOutlineColor(m_bulletCfg.outlineColor);
 		cs.setOutlineThickness(m_bulletCfg.outlineThickness);
+		cs.setOrigin(m_bulletCfg.radius, m_bulletCfg.radius);
 		std::shared_ptr<CShape> compS = std::make_shared<CShape>(cs);
 		bullet->cShape = compS;
+
+		std::shared_ptr<CLifeSpan> compLifeSpan = std::make_shared<CLifeSpan>(m_bulletCfg.lifespan);
+		bullet->cLifeSpan = compLifeSpan;
+
 		float radians = (e->cTransform->angle - 45) * (M_PI / 180);
 
 		std::shared_ptr<CTransform> ct = std::make_shared<CTransform>(

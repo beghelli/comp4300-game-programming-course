@@ -20,3 +20,8 @@ bool Entity::isActive() const
 {
 	return m_active;
 }
+
+void Entity::setActive(bool isActive)
+{
+	m_active = isActive;
+}
