@@ -22,6 +22,7 @@ Game::Game(const Config& config)
 	sf::VideoMode vm(wc.width, wc.height);
 	m_window.create(vm, "My Game");
 	m_window.setFramerateLimit(wc.frameRate);
+	m_sEnemySpawner = SEnemySpawner(config.getEnemy());
 	m_sMovement = SMovement(Vec2(wc.width, wc.height));
 	m_sGun = SGun(config.getBullet());
 }
@@ -43,6 +44,7 @@ void Game::runGameLoop()
 	{
 		m_gameFrame++;
 		m_entities.update();
+		m_sEnemySpawner.process(m_entities, m_gameFrame);
 		m_sInput.process(m_entities, m_window);
 		m_sMovement.process(m_entities);
 		m_sLifeSpan.process(m_entities);

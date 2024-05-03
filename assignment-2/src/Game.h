@@ -2,6 +2,7 @@
 #include <iostream>
 #include <SFML/Graphics/RenderWindow.hpp>
 #include "EntityManager.h"
+#include "SEnemySpawner.h"
 #include "SInput.h"
 #include "SGun.h"
 #include "SLifeSpan.h"
@@ -13,6 +14,7 @@ class Game
 	const Config& m_config;
 	sf::RenderWindow m_window;
 	EntityManager m_entities;
+	SEnemySpawner m_sEnemySpawner;
 	SInput m_sInput;
 	SGun m_sGun;
 	SLifeSpan m_sLifeSpan;
