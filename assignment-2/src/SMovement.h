@@ -8,6 +8,7 @@ class SMovement
 
 	void applyMovementFromInput(std::shared_ptr<Entity>& e);
 	void applyMovementFromMouseInput(std::shared_ptr<Entity>& e);
+	void bounceOnScreenEdges(std::shared_ptr<Entity>& e);
 	double adaptVelocityToStayInsideMovArea(float pos, float limit, double velocity);
 	double calculateMouseAngle(Vec2 ep, Vec2 mp);
 

@@ -16,6 +16,10 @@ void SMovement::process(EntityManager& entities)
 			{
 				applyMovementFromInput(e);
 			}
+			else
+			{
+				bounceOnScreenEdges(e);
+			}
 
 			if (e->cMouseInput)
 			{
@@ -83,6 +87,21 @@ void SMovement::applyMovementFromMouseInput(std::shared_ptr<Entity>& e)
 	{
 		double mAngle = calculateMouseAngle(e->cTransform->pos, e->cMouseInput->pos);
 		e->cTransform->angle = mAngle;
+	}
+}
+
+void SMovement::bounceOnScreenEdges(std::shared_ptr<Entity>& e)
+{
+	if (e->cTransform->pos.x + (e->cShape->shape.getLocalBounds().width / 2) >= m_movAreaSize.x
+			|| e->cTransform->pos.x - (e->cShape->shape.getLocalBounds().width / 2) <= 0)
+	{
+		e->cTransform->velocity.x *= -1;
+	}
+
+	if (e->cTransform->pos.y + (e->cShape->shape.getLocalBounds().height / 2) >= m_movAreaSize.y
+			|| e->cTransform->pos.y - (e->cShape->shape.getLocalBounds().height / 2) <= 0)
+	{
+		e->cTransform->velocity.y *= -1;
 	}
 }
 

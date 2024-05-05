@@ -11,6 +11,7 @@ public:
 	Vec2& operator - (const Vec2& vo);
 	Vec2& operator * (const Vec2& vo);
 	Vec2& operator / (const Vec2& vo);
+	Vec2& rotate(float degrees);
 	bool operator == (const Vec2& vo) const;
 	bool operator != (const Vec2& vo) const;
 	void print() const;

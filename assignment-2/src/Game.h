@@ -24,6 +24,7 @@ class Game
 
 	void runGameLoop();
 	void createPlayer();
+	void init();
 
 public:
 	Game(const Config& configFile);

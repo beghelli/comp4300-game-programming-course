@@ -1,5 +1,6 @@
 #include <iostream>
 #include <memory>
+#include <time.h>
 #include <SFML/Graphics.hpp>
 #include <SFML/Graphics/CircleShape.hpp>
 #include <SFML/Window/Keyboard.hpp>
@@ -22,13 +23,14 @@ Game::Game(const Config& config)
 	sf::VideoMode vm(wc.width, wc.height);
 	m_window.create(vm, "My Game");
 	m_window.setFramerateLimit(wc.frameRate);
-	m_sEnemySpawner = SEnemySpawner(config.getEnemy());
+	m_sEnemySpawner = SEnemySpawner(config.getEnemy(), wc.width, wc.height);
 	m_sMovement = SMovement(Vec2(wc.width, wc.height));
 	m_sGun = SGun(config.getBullet());
 }
 
 int Game::run()
 {
+	init();
 	createPlayer();
 	runGameLoop();
 
@@ -38,6 +40,11 @@ int Game::run()
 //
 // Private methods.
 //
+void Game::init()
+{
+	std::srand(time(0));
+}
+
 void Game::runGameLoop()
 {
 	while (m_window.isOpen())

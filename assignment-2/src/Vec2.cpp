@@ -1,4 +1,5 @@
 #include <iostream>
+#include <cmath>
 #include "Vec2.h"
 
 Vec2::Vec2() {}
@@ -38,6 +39,19 @@ Vec2& Vec2::operator / (const Vec2& vo)
 
 	return *this;
 }
+
+Vec2& Vec2::rotate(float degrees)
+{
+	float radians = degrees * (M_PI / 180);
+	float newX = x * cos(radians) - y * sin(radians);
+	float newY = x * sin(radians) + y * cos(radians);
+
+	x = newX;
+	y = newY;
+
+	return *this;
+}
+
 bool Vec2::operator == (const Vec2& vo) const
 {
 	return x == vo.x && y == vo.y;

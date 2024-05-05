@@ -43,7 +43,7 @@ public:
 	{
 		unsigned int radius;
 		unsigned int collisionRadius;
-		Interval<float> velocity;
+		Interval<int> velocity;
 		sf::Color outlineColor;
 		unsigned int outlineThickness;
 		Interval<int> vertices;
