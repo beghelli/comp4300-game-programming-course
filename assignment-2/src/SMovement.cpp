@@ -29,6 +29,12 @@ void SMovement::process(EntityManager& entities)
 			sf::Shape& shape = e->cShape->shape;
 			Vec2 newPos = e->cTransform->pos + e->cTransform->velocity;
 			shape.setPosition(newPos.x, newPos.y);
+
+			e->cTransform->angle += e->cTransform->rotationVelocity;
+			if (e->cTransform->angle > 360)
+			{
+				e->cTransform->angle = 0;
+			}
 			shape.setRotation(e->cTransform->angle);
 		}
 	}

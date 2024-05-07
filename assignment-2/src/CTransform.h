@@ -9,6 +9,7 @@ public:
 	Vec2 scale;
 	double angle;
 	double maxVelocity;
+	double rotationVelocity {0};
 
 	CTransform();
 	CTransform(Vec2 pos, Vec2 velocity, Vec2 scale, double angle, double maxVelocity);
