@@ -2,9 +2,9 @@
 
 #include "EntityManager.h"
 
-class SLifeSpan
+class SEntityLife
 {
 public:
-	SLifeSpan();
+	SEntityLife();
 	void process(EntityManager& entities);
 };

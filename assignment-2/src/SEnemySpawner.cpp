@@ -1,7 +1,8 @@
-#include "SEnemySpawner.h"
-#include "Entity.h"
+#include "CCollision.h"
 #include "CTransform.h"
 #include "CShape.h"
+#include "Entity.h"
+#include "SEnemySpawner.h"
 
 SEnemySpawner::SEnemySpawner() {}
 
@@ -26,6 +27,9 @@ void SEnemySpawner::process(
 	{
 		std::shared_ptr<Entity> enemy = entities.addEntity("Enemy");
 		std::shared_ptr<CTransform> ct = std::make_shared<CTransform>();
+		std::shared_ptr<CCollision> cc = std::make_shared<CCollision>();
+		cc->collisionRadius = m_enemyCfg.radius;
+		enemy->cCollision = cc;
 
 		unsigned int xPos = m_enemySpawnWindowLimits.left +
 			(rand() % (m_enemySpawnWindowLimits.right - m_enemySpawnWindowLimits.left));

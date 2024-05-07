@@ -53,10 +53,11 @@ void Game::runGameLoop()
 		m_entities.update();
 		m_sEnemySpawner.process(m_entities, m_gameFrame);
 		m_sInput.process(m_entities, m_window);
-		m_sMovement.process(m_entities);
-		m_sLifeSpan.process(m_entities);
-		m_sRenderer.process(m_entities, m_window);
 		m_sGun.process(m_entities, m_gameFrame);
+		m_sMovement.process(m_entities);
+		m_sCollisionDetector.process(m_entities);
+		m_sEntityLife.process(m_entities);
+		m_sRenderer.process(m_entities, m_window);
 	}
 }
 

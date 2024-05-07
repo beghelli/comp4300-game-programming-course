@@ -1,8 +1,9 @@
 #include <SFML/Graphics/CircleShape.hpp>
-#include "SGun.h"
+#include "CCollision.h"
 #include "CLifeSpan.h"
 #include "CShape.h"
 #include "CTransform.h"
+#include "SGun.h"
 #include "Vec2.h"
 
 SGun::SGun() {}
@@ -33,6 +34,11 @@ void SGun::handleFire(EntityManager& entities, std::shared_ptr<Entity>& e, unsig
 		cs.setOrigin(m_bulletCfg.radius, m_bulletCfg.radius);
 		std::shared_ptr<CShape> compS = std::make_shared<CShape>(cs);
 		bullet->cShape = compS;
+
+		std::shared_ptr<CCollision> cc = std::make_shared<CCollision>();
+		cc->collisionRadius = m_bulletCfg.radius;
+		cc->checkAgainstTags.push_back("Enemy");
+		bullet->cCollision = cc;
 
 		std::shared_ptr<CLifeSpan> compLifeSpan = std::make_shared<CLifeSpan>(m_bulletCfg.lifespan);
 		bullet->cLifeSpan = compLifeSpan;

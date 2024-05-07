@@ -1,10 +1,11 @@
+#include <iostream>
 #include <cmath>
 #include <SFML/Graphics/RenderWindow.hpp>
-#include "SLifeSpan.h"
+#include "SEntityLife.h"
 
-SLifeSpan::SLifeSpan() {}
+SEntityLife::SEntityLife() {}
 
-void SLifeSpan::process(EntityManager& entities)
+void SEntityLife::process(EntityManager& entities)
 {
 	for (std::shared_ptr<Entity>& e : entities.getEntities())
 	{
@@ -29,7 +30,14 @@ void SLifeSpan::process(EntityManager& entities)
 			if (e->cLifeSpan->ageInFrames == e->cLifeSpan->lifeSpan)
 			{
 				e->setActive(false);
+				std::cout << "Entity " << e->id() << " died" << std::endl;
 			}
+		}
+
+		if (e->isActive() && e->cCollision && e->cCollision->collided)
+		{
+			e->setActive(false);
+			std::cout << "Entity " << e->id() << " died" << std::endl;
 		}
 	}
 
