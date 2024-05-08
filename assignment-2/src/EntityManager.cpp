@@ -15,6 +15,7 @@ void EntityManager::update()
 	std::map<std::string, std::vector<int>> toDeleteByTag;
 	unsigned int counter = 0;
 	unsigned int counterInTag;
+	bool foundInTag;
 	for (std::shared_ptr<Entity>& e : m_entities)
 	{
 		if (! e->isActive())
@@ -22,29 +23,38 @@ void EntityManager::update()
 			toDelete.push_back(counter);
 
 			counterInTag = 0;
+			foundInTag = false;
 			for (std::shared_ptr<Entity>& eInTag : getEntities(e->tag()))
 			{
 				if (eInTag->id() == e->id())
 				{
+					foundInTag = true;
 					break;
 				}
 				counterInTag++;
 			}
-			toDeleteByTag[e->tag()].push_back(counterInTag);
+			if (foundInTag)
+			{
+				toDeleteByTag[e->tag()].push_back(counterInTag);
+			}
 		}
 		counter++;
 	}
 
+	unsigned int deleteCount = 0;
 	for (int index : toDelete)
 	{
-		m_entities.erase(m_entities.begin() + index);
+		m_entities.erase(m_entities.begin() + index - deleteCount);
+		deleteCount++;
 	}
 
 	for (auto const& [tag, indexes] : toDeleteByTag)
 	{
+		deleteCount = 0;
 		for (int index : indexes)
 		{
-			m_entitiesByTag[tag].erase(m_entitiesByTag[tag].begin() + index);
+			m_entitiesByTag[tag].erase(m_entitiesByTag[tag].begin() + index - deleteCount);
+			deleteCount++;
 		}
 	}
 
