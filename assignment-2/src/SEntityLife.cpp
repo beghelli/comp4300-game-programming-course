@@ -30,14 +30,12 @@ void SEntityLife::process(EntityManager& entities)
 			if (e->cLifeSpan->ageInFrames == e->cLifeSpan->lifeSpan)
 			{
 				e->setActive(false);
-				std::cout << "Entity " << e->id() << " died" << std::endl;
 			}
 		}
 
 		if (e->isActive() && e->cCollision && e->cCollision->collided)
 		{
 			e->setActive(false);
-			std::cout << "Entity " << e->id() << " died" << std::endl;
 		}
 	}
 

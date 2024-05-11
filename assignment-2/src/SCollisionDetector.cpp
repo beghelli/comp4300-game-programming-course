@@ -20,7 +20,6 @@ void SCollisionDetector::process(EntityManager& entities)
 					{
 						e->cCollision->collided = true;
 						ce->cCollision->collided = true;
-						std::cout << ce->tag() << " " << ce->id() << " collided with bullet" << std::endl;
 					}
 				}
 			}

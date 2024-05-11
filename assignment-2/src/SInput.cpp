@@ -8,7 +8,6 @@ void SInput::process(EntityManager& entities, sf::RenderWindow& window)
 	sf::Event event;
 	while (window.pollEvent(event))
 	{
-		std::cout << "got event from poll" << std::endl;
 		if (event.type == sf::Event::Closed)
 		{
 			window.close();
