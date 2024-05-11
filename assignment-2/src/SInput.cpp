@@ -8,6 +8,7 @@ void SInput::process(EntityManager& entities, sf::RenderWindow& window)
 	sf::Event event;
 	while (window.pollEvent(event))
 	{
+		std::cout << "got event from poll" << std::endl;
 		if (event.type == sf::Event::Closed)
 		{
 			window.close();
@@ -96,10 +97,13 @@ void SInput::handleMouseForEntity(sf::Event event, std::shared_ptr<Entity>& e)
 			e->cMouseInput->leftClickPos.y = 0;
 		}
 	}
-	else
+	else if (event.type == sf::Event::MouseButtonReleased)
 	{
-		e->cMouseInput->leftClicked = false;
-		e->cMouseInput->leftClickPos.x = 0;
-		e->cMouseInput->leftClickPos.y = 0;
+		if (event.mouseButton.button == sf::Mouse::Left)
+		{
+			e->cMouseInput->leftClicked = false;
+			e->cMouseInput->leftClickPos.x = 0;
+			e->cMouseInput->leftClickPos.y = 0;
+		}
 	}
 }
