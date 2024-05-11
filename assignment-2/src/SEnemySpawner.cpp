@@ -3,6 +3,7 @@
 #include "CShape.h"
 #include "Entity.h"
 #include "SEnemySpawner.h"
+#include "Vec2.h"
 
 SEnemySpawner::SEnemySpawner() {}
 
@@ -67,5 +68,49 @@ void SEnemySpawner::process(
 		enemy->cShape = cs;
 
 		m_lastEnemyAddedFrame = gameFrame;
+
+	}
+
+	float degreesIncrease;
+	float s_degrees;
+	Vec2 pos;
+	std::size_t s_vertices;
+	for (std::shared_ptr<Entity>& e : entities.getEntitiesDeleted())
+	{
+		if (e->tag() == "Enemy" && ! e->cLifeSpan)
+		{
+			pos = e->cTransform->pos;
+			s_vertices = e->cShape->shape.getPointCount();
+			degreesIncrease = 360 / s_vertices;
+			s_degrees = 0;
+
+			for (int i = 0; i < s_vertices; i++)
+			{
+				std::shared_ptr<Entity> smallEnemy = entities.addEntity("Enemy");
+				std::shared_ptr<CTransform> s_ct = std::make_shared<CTransform>();
+				std::shared_ptr<CCollision> s_cc = std::make_shared<CCollision>();
+				s_cc->collisionRadius = m_enemyCfg.radius / 2;
+				smallEnemy->cCollision = s_cc;
+
+				s_ct->pos = pos;
+				s_ct->velocity = e->cTransform->velocity;
+				s_ct->velocity.rotate(s_degrees);
+				s_ct->rotationVelocity = e->cTransform->rotationVelocity;
+				smallEnemy->cTransform = s_ct;
+
+				sf::CircleShape s_shape(s_cc->collisionRadius, s_vertices);
+				s_shape.setOrigin(s_cc->collisionRadius, s_cc->collisionRadius);
+				s_shape.setFillColor(e->cShape->shape.getFillColor());
+				s_shape.setOutlineColor(e->cShape->shape.getOutlineColor());
+				s_shape.setOutlineThickness(e->cShape->shape.getOutlineThickness());
+				std::shared_ptr<CShape> s_cs = std::make_shared<CShape>(s_shape);
+				smallEnemy->cShape = s_cs;
+
+				std::shared_ptr<CLifeSpan> s_cls = std::make_shared<CLifeSpan>(m_enemyCfg.smallLifespan);
+				smallEnemy->cLifeSpan = s_cls;
+
+				s_degrees += degreesIncrease;
+			}
+		}
 	}
 }

@@ -5,6 +5,7 @@ EntityManager::EntityManager() {};
 
 void EntityManager::update()
 {
+	m_entitiesDeleted.clear();
 	for (std::shared_ptr<Entity>& e : m_entitiesToAdd)
 	{
 		m_entities.push_back(e);
@@ -44,6 +45,7 @@ void EntityManager::update()
 	unsigned int deleteCount = 0;
 	for (int index : toDelete)
 	{
+		m_entitiesDeleted.push_back(m_entities[index - deleteCount]);
 		m_entities.erase(m_entities.begin() + index - deleteCount);
 		deleteCount++;
 	}
@@ -81,4 +83,7 @@ EntityManager::VEntities& EntityManager::getEntities(std::string tag)
 	return m_entitiesByTag[tag];
 }
 
-
+EntityManager::VEntities& EntityManager::getEntitiesDeleted()
+{
+	return m_entitiesDeleted;
+}
