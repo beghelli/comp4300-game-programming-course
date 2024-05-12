@@ -9,6 +9,7 @@
 #include "SEntityLife.h"
 #include "SMovement.h"
 #include "SRenderer.h"
+#include "SScore.h"
 
 class Game
 {
@@ -22,6 +23,7 @@ class Game
 	SEntityLife m_sEntityLife;
 	SMovement m_sMovement;
 	SRenderer m_sRenderer;
+	SScore m_sScore;
 	unsigned int m_gameFrame { 0 };
 
 	void runGameLoop();

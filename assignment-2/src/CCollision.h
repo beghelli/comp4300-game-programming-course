@@ -10,5 +10,6 @@ public:
 	std::vector<std::string> checkAgainstTags;
 	unsigned int collisionRadius;
 	bool collided {false};
+	std::string collidedWithTag;
 	CCollision();
 };

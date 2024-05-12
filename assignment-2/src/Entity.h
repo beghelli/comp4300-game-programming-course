@@ -6,6 +6,7 @@
 #include "CGun.h"
 #include "CLifeSpan.h"
 #include "CMouseInput.h"
+#include "CScore.h"
 #include "CShape.h"
 #include "CTransform.h"
 
@@ -20,6 +21,7 @@ public:
 	std::shared_ptr<CGun> cGun;
 	std::shared_ptr<CLifeSpan> cLifeSpan;
 	std::shared_ptr<CMouseInput> cMouseInput;
+	std::shared_ptr<CScore> cScore;
 	std::shared_ptr<CShape> cShape;
 	std::shared_ptr<CTransform> cTransform;
 

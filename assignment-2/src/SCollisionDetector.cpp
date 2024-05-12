@@ -19,7 +19,9 @@ void SCollisionDetector::process(EntityManager& entities)
 							&& std::abs(e->cTransform->pos.y - ce->cTransform->pos.y) <= collisionDistance)
 					{
 						e->cCollision->collided = true;
+						e->cCollision->collidedWithTag = tag;
 						ce->cCollision->collided = true;
+						ce->cCollision->collidedWithTag = e->tag();
 					}
 				}
 			}

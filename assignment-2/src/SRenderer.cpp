@@ -12,6 +12,11 @@ void SRenderer::process(EntityManager& entities, sf::RenderWindow& window)
 			sf::Shape& shape = e->cShape->shape;
 			window.draw(shape);
 		}
+
+		if (e->cScore)
+		{
+			window.draw(e->cScore->scoreText);
+		}
 	}
 
 	window.display();

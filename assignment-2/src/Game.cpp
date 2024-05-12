@@ -3,12 +3,15 @@
 #include <time.h>
 #include <SFML/Graphics.hpp>
 #include <SFML/Graphics/CircleShape.hpp>
+#include <SFML/Graphics/Text.hpp>
 #include <SFML/Window/Keyboard.hpp>
 #include <SFML/Window/VideoMode.hpp>
 #include "Config.h"
+#include "CCollision.h"
 #include "CInput.h"
 #include "CMouseInput.h"
 #include "CGun.h"
+#include "CScore.h"
 #include "CShape.h"
 #include "CTransform.h"
 #include "Entity.h"
@@ -26,6 +29,10 @@ Game::Game(const Config& config)
 	m_sEnemySpawner = SEnemySpawner(config.getEnemy(), wc.width, wc.height);
 	m_sMovement = SMovement(Vec2(wc.width, wc.height));
 	m_sGun = SGun(config.getBullet());
+
+	sf::Font font;
+	font.loadFromFile(config.getFont().font);
+	m_sScore = SScore(font);
 }
 
 int Game::run()
@@ -49,6 +56,10 @@ void Game::runGameLoop()
 {
 	while (m_window.isOpen())
 	{
+		if (m_entities.getEntities("Player").size() == 0)
+		{
+			createPlayer();
+		}
 		m_gameFrame++;
 		m_entities.update();
 		m_sEnemySpawner.process(m_entities, m_gameFrame);
@@ -57,6 +68,7 @@ void Game::runGameLoop()
 		m_sMovement.process(m_entities);
 		m_sCollisionDetector.process(m_entities);
 		m_sEntityLife.process(m_entities);
+		m_sScore.process(m_entities);
 		m_sRenderer.process(m_entities, m_window);
 	}
 }
@@ -88,4 +100,12 @@ void Game::createPlayer()
 	std::shared_ptr<CGun> cgun = std::make_shared<CGun>();
 	cgun->framesPerFire = pc.fireRate;
 	e->cGun = cgun;
+
+	std::shared_ptr<CCollision> cc = std::make_shared<CCollision>();
+	cc->collisionRadius = pc.radius;
+	cc->checkAgainstTags.push_back("Enemy");
+	e->cCollision = cc;
+
+	std::shared_ptr<CScore> csc = std::make_shared<CScore>();
+	e->cScore = csc;
 }
