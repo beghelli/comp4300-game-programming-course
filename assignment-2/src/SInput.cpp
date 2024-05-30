@@ -95,6 +95,18 @@ void SInput::handleMouseForEntity(sf::Event event, std::shared_ptr<Entity>& e)
 			e->cMouseInput->leftClickPos.x = 0;
 			e->cMouseInput->leftClickPos.y = 0;
 		}
+		if (event.mouseButton.button == sf::Mouse::Right)
+		{
+			e->cMouseInput->rightClicked = true;
+			e->cMouseInput->rightClickPos.x = event.mouseButton.x;
+			e->cMouseInput->rightClickPos.y = event.mouseButton.y;
+		}
+		else
+		{
+			e->cMouseInput->rightClicked = false;
+			e->cMouseInput->rightClickPos.x = 0;
+			e->cMouseInput->rightClickPos.y = 0;
+		}
 	}
 	else if (event.type == sf::Event::MouseButtonReleased)
 	{
@@ -103,6 +115,12 @@ void SInput::handleMouseForEntity(sf::Event event, std::shared_ptr<Entity>& e)
 			e->cMouseInput->leftClicked = false;
 			e->cMouseInput->leftClickPos.x = 0;
 			e->cMouseInput->leftClickPos.y = 0;
+		}
+		if (event.mouseButton.button == sf::Mouse::Right)
+		{
+			e->cMouseInput->rightClicked = false;
+			e->cMouseInput->rightClickPos.x = 0;
+			e->cMouseInput->rightClickPos.y = 0;
 		}
 	}
 }

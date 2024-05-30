@@ -2,12 +2,14 @@
 #include <iostream>
 #include <memory>
 #include "CCollision.h"
+#include "CEntityLife.h"
 #include "CInput.h"
 #include "CGun.h"
 #include "CLifeSpan.h"
 #include "CMouseInput.h"
 #include "CScore.h"
 #include "CShape.h"
+#include "CShield.h"
 #include "CTransform.h"
 
 class Entity
@@ -17,12 +19,14 @@ class Entity
 	size_t m_id;
 public:
 	std::shared_ptr<CCollision> cCollision;
+	std::shared_ptr<CEntityLife> cEntityLife;
 	std::shared_ptr<CInput> cInput;
 	std::shared_ptr<CGun> cGun;
 	std::shared_ptr<CLifeSpan> cLifeSpan;
 	std::shared_ptr<CMouseInput> cMouseInput;
 	std::shared_ptr<CScore> cScore;
 	std::shared_ptr<CShape> cShape;
+	std::shared_ptr<CShield> cShield;
 	std::shared_ptr<CTransform> cTransform;
 
 	Entity(std::string tag, size_t id);

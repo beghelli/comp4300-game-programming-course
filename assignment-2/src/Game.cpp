@@ -8,11 +8,13 @@
 #include <SFML/Window/VideoMode.hpp>
 #include "Config.h"
 #include "CCollision.h"
+#include "CEntityLife.h"
 #include "CInput.h"
 #include "CMouseInput.h"
 #include "CGun.h"
 #include "CScore.h"
 #include "CShape.h"
+#include "CShield.h"
 #include "CTransform.h"
 #include "Entity.h"
 #include "EntityManager.h"
@@ -56,15 +58,16 @@ void Game::runGameLoop()
 {
 	while (m_window.isOpen())
 	{
+		m_gameFrame++;
+		m_entities.update();
 		if (m_entities.getEntities("Player").size() == 0)
 		{
 			createPlayer();
 		}
-		m_gameFrame++;
-		m_entities.update();
 		m_sEnemySpawner.process(m_entities, m_gameFrame);
 		m_sInput.process(m_entities, m_window);
 		m_sGun.process(m_entities, m_gameFrame);
+		m_sShield.process(m_entities);
 		m_sMovement.process(m_entities);
 		m_sCollisionDetector.process(m_entities);
 		m_sEntityLife.process(m_entities);
@@ -108,4 +111,11 @@ void Game::createPlayer()
 
 	std::shared_ptr<CScore> csc = std::make_shared<CScore>();
 	e->cScore = csc;
+
+	std::shared_ptr<CShield> cShield = std::make_shared<CShield>(480, 480, 2, 1);
+	e->cShield = cShield;
+
+	std::vector<std::string> tags {"Enemy"};
+	std::shared_ptr<CEntityLife> cLife = std::make_shared<CEntityLife>(tags);
+	e->cEntityLife = cLife;
 }

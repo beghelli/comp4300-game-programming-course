@@ -67,8 +67,11 @@ void SEnemySpawner::process(
 		std::shared_ptr<CShape> cs = std::make_shared<CShape>(shape);
 		enemy->cShape = cs;
 
-		m_lastEnemyAddedFrame = gameFrame;
+		std::vector<std::string> tags {"Player", "Bullet"};
+		std::shared_ptr<CEntityLife> cel = std::make_shared<CEntityLife>(tags);
+		enemy->cEntityLife = cel;
 
+		m_lastEnemyAddedFrame = gameFrame;
 	}
 
 	float degreesIncrease;
@@ -108,6 +111,10 @@ void SEnemySpawner::process(
 
 				std::shared_ptr<CLifeSpan> s_cls = std::make_shared<CLifeSpan>(m_enemyCfg.smallLifespan);
 				smallEnemy->cLifeSpan = s_cls;
+
+				std::vector<std::string> tags {"Player", "Bullet"};
+				std::shared_ptr<CEntityLife> cel = std::make_shared<CEntityLife>(tags);
+				smallEnemy->cEntityLife = cel;
 
 				s_degrees += degreesIncrease;
 			}

@@ -8,5 +8,7 @@ public:
 	bool moved { false };
 	Vec2 leftClickPos;
 	bool leftClicked { false };
+	Vec2 rightClickPos;
+	bool rightClicked { false };
 	CMouseInput();
 };

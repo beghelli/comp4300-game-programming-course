@@ -1,5 +1,6 @@
 #include <SFML/Graphics/CircleShape.hpp>
 #include "CCollision.h"
+#include "CEntityLife.h"
 #include "CLifeSpan.h"
 #include "CShape.h"
 #include "CTransform.h"
@@ -39,6 +40,10 @@ void SGun::handleFire(EntityManager& entities, std::shared_ptr<Entity>& e, unsig
 		cc->collisionRadius = m_bulletCfg.radius;
 		cc->checkAgainstTags.push_back("Enemy");
 		bullet->cCollision = cc;
+
+		std::vector<std::string> tags {"Enemy"};
+		std::shared_ptr<CEntityLife> cel = std::make_shared<CEntityLife>(tags);
+		bullet->cEntityLife = cel;
 
 		std::shared_ptr<CLifeSpan> compLifeSpan = std::make_shared<CLifeSpan>(m_bulletCfg.lifespan);
 		bullet->cLifeSpan = compLifeSpan;

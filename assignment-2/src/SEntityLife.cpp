@@ -33,9 +33,16 @@ void SEntityLife::process(EntityManager& entities)
 			}
 		}
 
-		if (e->isActive() && e->cCollision && e->cCollision->collided)
+		if (e->isActive() && e->cCollision && e->cCollision->collided && e->cEntityLife)
 		{
-			e->setActive(false);
+			std::vector<std::string> dieOnCollisionTags = e->cEntityLife->m_dieOnCollidingWithTags;
+			std::vector<std::string>::iterator diesOnCollisionTagIt = std::find(dieOnCollisionTags.begin(), dieOnCollisionTags.end(), e->cCollision->collidedWithTag);
+			bool diesOnCollision = diesOnCollisionTagIt != dieOnCollisionTags.end();
+
+			if (diesOnCollision)
+			{
+				e->setActive(false);
+			}
 		}
 	}
 

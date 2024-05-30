@@ -7,7 +7,10 @@
 
 class EntityManager
 {
+public:
 	typedef std::vector<std::shared_ptr<Entity>> VEntities;
+
+private:
 	std::map<std::string, VEntities> m_entitiesByTag;
 	VEntities m_entities;
 	VEntities m_entitiesToAdd;
